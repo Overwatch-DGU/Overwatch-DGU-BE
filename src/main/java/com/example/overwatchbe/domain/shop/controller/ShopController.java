@@ -29,11 +29,11 @@ public class ShopController {
         return ResponseEntity.ok(shopService.getItemsByCharacter(characterId, userId));
     }
 
-//    // Get item details
-//    @GetMapping("/items/{itemId}")
-//    public ResponseEntity<ItemDetailResponse> getItemDetail(@PathVariable Long itemId, @RequestParam Long userId) {
-//        return ResponseEntity.ok(shopService.getItemDetail(itemId, userId));
-//    }
+    // Get item details
+    @GetMapping("/items/{itemId}")
+    public ResponseEntity<ItemDetailResponse> getItemDetail(@PathVariable Long itemId, @RequestParam Long userId) {
+        return ResponseEntity.ok(shopService.getItemDetail(itemId, userId));
+    }
 //
 //    // Buy item
 //    @PostMapping("/buy")

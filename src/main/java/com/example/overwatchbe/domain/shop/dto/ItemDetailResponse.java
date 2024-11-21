@@ -12,5 +12,6 @@ public class ItemDetailResponse {
     private String rarity;
     private int price;
     private String image;
+    private String description;
     private boolean owned;
 }

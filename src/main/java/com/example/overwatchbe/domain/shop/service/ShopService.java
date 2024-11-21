@@ -56,25 +56,26 @@ public class ShopService {
                 ))
                 .collect(Collectors.toList());
     }
-//
-//    public ItemDetailResponse getItemDetail(Long itemId, Long userId) {
-//        // Fetch item and validate existence
-//        Item item = itemRepository.findById(itemId)
-//                .orElseThrow(() -> new RuntimeException("Item not found"));
-//
-//        boolean owned = inventoryRepository.existsByUser_UserIdAndItem_ItemId(userId, itemId);
-//
-//        return new ItemDetailResponse(
-//                item.getItemId(),
-//                item.getName(),
-//                item.getType(),
-//                item.getRarity().getDisplayName(),
-//                item.getPrice(),
-//                item.getImage(),
-//                owned
-//        );
-//    }
-//
+
+    public ItemDetailResponse getItemDetail(Long itemId, Long userId) {
+        // Fetch item and validate existence
+        Item item = itemRepository.findById(itemId)
+                .orElseThrow(() -> new RuntimeException("Item not found"));
+
+        boolean owned = inventoryRepository.existsByUser_UserIdAndItem_ItemId(userId, itemId);
+
+        return new ItemDetailResponse(
+                item.getItemId(),
+                item.getName(),
+                item.getType(),
+                item.getRarity().getDisplayName(),
+                item.getPrice(),
+                item.getImage(),
+                item.getDescription(),
+                owned
+        );
+    }
+
 //    public BuyResponse buyItem(BuyRequest buyRequest) {
 //        // Fetch user and validate existence
 //        var user = userRepository.findById(buyRequest.getUserId())
