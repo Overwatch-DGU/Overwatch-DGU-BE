@@ -76,29 +76,29 @@ public class ShopService {
         );
     }
 
-//    public BuyResponse buyItem(BuyRequest buyRequest) {
-//        // Fetch user and validate existence
-//        var user = userRepository.findById(buyRequest.getUserId())
-//                .orElseThrow(() -> new RuntimeException("User not found"));
-//
-//        // Fetch item and validate existence
-//        var item = itemRepository.findById(buyRequest.getItemId())
-//                .orElseThrow(() -> new RuntimeException("Item not found"));
-//
-//        if (user.getCoin() < item.getPrice()) {
-//            throw new RuntimeException("Not enough coins");
-//        }
-//
-//        // Deduct coins and save the purchase
-//        user.setCoin(user.getCoin() - item.getPrice());
-//        userRepository.save(user);
-//
-//        var inventory = Inventory.builder()
-//                .user(user)
-//                .item(item)
-//                .build();
-//        inventoryRepository.save(inventory);
-//
-//        return new BuyResponse(user.getCoin(), "Item purchased successfully");
-//    }
+    public BuyResponse buyItem(BuyRequest buyRequest) {
+        // Fetch user and validate existence
+        var user = userRepository.findById(buyRequest.getUserId())
+                .orElseThrow(() -> new RuntimeException("User not found"));
+
+        // Fetch item and validate existence
+        var item = itemRepository.findById(buyRequest.getItemId())
+                .orElseThrow(() -> new RuntimeException("Item not found"));
+
+        if (user.getCoin() < item.getPrice()) {
+            throw new RuntimeException("Not enough coins");
+        }
+
+        // Deduct coins and save the purchase
+        user.setCoin(user.getCoin() - item.getPrice());
+        userRepository.save(user);
+
+        var inventory = Inventory.builder()
+                .user(user)
+                .item(item)
+                .build();
+        inventoryRepository.save(inventory);
+
+        return new BuyResponse(user.getCoin(), "Item purchased successfully");
+    }
 }
