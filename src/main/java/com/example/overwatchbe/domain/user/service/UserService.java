@@ -22,7 +22,7 @@ public class UserService {
         ).orElseThrow(() -> new RuntimeException("Invalid email or password"));
 
         return new UserResponse(
-                user.getUser_id(),
+                user.getUserId(),
                 user.getUsername(),
                 user.getLevel(),
                 user.getCoin()
