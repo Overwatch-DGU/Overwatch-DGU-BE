@@ -34,10 +34,10 @@ public class ShopController {
     public ResponseEntity<ItemDetailResponse> getItemDetail(@PathVariable Long itemId, @RequestParam Long userId) {
         return ResponseEntity.ok(shopService.getItemDetail(itemId, userId));
     }
-//
-//    // Buy item
-//    @PostMapping("/buy")
-//    public ResponseEntity<BuyResponse> buyItem(@RequestBody BuyRequest buyRequest) {
-//        return ResponseEntity.ok(shopService.buyItem(buyRequest));
-//    }
+
+    // Buy item
+    @PostMapping("/buy")
+    public ResponseEntity<BuyResponse> buyItem(@RequestBody BuyRequest buyRequest) {
+        return ResponseEntity.ok(shopService.buyItem(buyRequest));
+    }
 }
