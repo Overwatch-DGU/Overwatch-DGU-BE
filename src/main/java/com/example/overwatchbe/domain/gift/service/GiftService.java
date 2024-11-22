@@ -7,7 +7,9 @@ import com.example.overwatchbe.domain.log.entity.GiftStatistics;
 import com.example.overwatchbe.domain.log.repository.GiftStatisticsRepository;
 import com.example.overwatchbe.domain.shop.dto.CharacterResponse;
 import com.example.overwatchbe.domain.shop.dto.ItemResponse;
+import com.example.overwatchbe.domain.shop.entity.Inventory;
 import com.example.overwatchbe.domain.shop.entity.Item;
+import com.example.overwatchbe.domain.shop.repository.InventoryRepository;
 import com.example.overwatchbe.domain.shop.repository.ItemRepository;
 import com.example.overwatchbe.domain.shop.repository.CharacterRepository;
 import com.example.overwatchbe.domain.user.entity.User;
@@ -29,6 +31,7 @@ public class GiftService {
     private final GiftRepository giftRepository;
     private final UserRepository userRepository;
     private final GiftStatisticsRepository giftStatisticsRepository;
+    private final InventoryRepository inventoryRepository;
 
 //    public GiftService(GiftRepository giftRepository, UserRepository userRepository, ItemRepository itemRepository, CharacterRepository characterRepository) {
 //        this.giftRepository = giftRepository;
@@ -135,6 +138,13 @@ public class GiftService {
                 .giftedAt(LocalDateTime.now())
                 .build();
         giftRepository.save(gift);
+
+        // Receiver의 인벤토리에 아이템 추가
+        Inventory inventory = Inventory.builder()
+                .user(receiver)
+                .item(item)
+                .build();
+        inventoryRepository.save(inventory);
 
         // Update sender's gift statistics
         updateGiftStatistics(sender.getUserId(), true);
