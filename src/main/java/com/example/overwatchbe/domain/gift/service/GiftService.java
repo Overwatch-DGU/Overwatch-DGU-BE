@@ -69,39 +69,64 @@ public class GiftService {
                 .collect(Collectors.toList());
     }
 
-    @Transactional
-    public GiftResponse sendGift(GiftRequest giftRequest) {
-        // Sender validation
-        Long senderId = giftRequest.getSenderId();
-        User sender = userRepository.findById(senderId)
-                .orElseThrow(() -> new RuntimeException("Sender not found"));
-
-        // Receiver validation
-        Long receiverId = giftRequest.getReceiverId();
-        User receiver = userRepository.findById(receiverId)
-                .orElseThrow(() -> new RuntimeException("Receiver not found"));
-
-        // Item validation
-        Long itemId = giftRequest.getItemId();
-        Item item = itemRepository.findById(itemId)
-                .orElseThrow(() -> new RuntimeException("Item not found"));
-
+//    @Transactional
+//    public GiftResponse sendGift(GiftRequest giftRequest) {
+//        // Sender validation
+//        Long senderId = giftRequest.getSenderId();
+//        User sender = userRepository.findById(senderId)
+//                .orElseThrow(() -> new RuntimeException("Sender not found"));
+//
+//        // Receiver validation
+//        Long receiverId = giftRequest.getReceiverId();
+//        User receiver = userRepository.findById(receiverId)
+//                .orElseThrow(() -> new RuntimeException("Receiver not found"));
+//
+//        // Item validation
+//        Long itemId = giftRequest.getItemId();
+//        Item item = itemRepository.findById(itemId)
+//                .orElseThrow(() -> new RuntimeException("Item not found"));
+//
+//        // Check if receiver already owns the item
+//        boolean alreadyOwned = giftRepository.existsByReceiver_UserIdAndItem_ItemId(receiver.getUserId(), item.getItemId());
+//        if (alreadyOwned) {
+//            throw new RuntimeException("The receiver already owns this item");
+//        }
+//
+//        // Check sender's coins
+//        if (sender.getCoin() < item.getPrice()) {
+//            throw new RuntimeException("Sender does not have enough coins");
+//        }
+//
+//        // Deduct coins from sender
+//        sender.setCoin(sender.getCoin() - item.getPrice());
+//        userRepository.save(sender);
+//
+//        // Save gift record
+//        Gift gift = Gift.builder()
+//                .sender(sender)
+//                .receiver(receiver)
+//                .item(item)
+//                .giftedAt(LocalDateTime.now())
+//                .build();
+//        giftRepository.save(gift);
+//
+//        // Return response
+//        return new GiftResponse("Gift sent successfully", item.getItemId(), sender.getCoin());
+//    }
+    public GiftResponse sendGift(User sender, User receiver, Item item) {
         // Check if receiver already owns the item
         boolean alreadyOwned = giftRepository.existsByReceiver_UserIdAndItem_ItemId(receiver.getUserId(), item.getItemId());
         if (alreadyOwned) {
-            throw new RuntimeException("The receiver already owns this item");
+            return new GiftResponse("The receiver already owns this item", item.getItemId(), sender.getCoin());
         }
 
-        // Check sender's coins
+        // Deduct item price from sender's coins
         if (sender.getCoin() < item.getPrice()) {
-            throw new RuntimeException("Sender does not have enough coins");
+            throw new IllegalStateException("Insufficient coins");
         }
-
-        // Deduct coins from sender
         sender.setCoin(sender.getCoin() - item.getPrice());
-        userRepository.save(sender);
 
-        // Save gift record
+        // Perform the gift transaction
         Gift gift = Gift.builder()
                 .sender(sender)
                 .receiver(receiver)
@@ -110,7 +135,7 @@ public class GiftService {
                 .build();
         giftRepository.save(gift);
 
-        // Return response
+        // Return response with success message
         return new GiftResponse("Gift sent successfully", item.getItemId(), sender.getCoin());
     }
 }
