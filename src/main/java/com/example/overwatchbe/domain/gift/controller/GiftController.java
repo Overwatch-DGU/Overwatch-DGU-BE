@@ -5,6 +5,8 @@ import com.example.overwatchbe.domain.gift.dto.GiftResponse;
 import com.example.overwatchbe.domain.gift.service.GiftService;
 import com.example.overwatchbe.domain.shop.dto.CharacterResponse;
 import com.example.overwatchbe.domain.shop.dto.ItemResponse;
+import com.example.overwatchbe.domain.user.entity.User;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -29,4 +31,13 @@ public class GiftController {
     public ResponseEntity<List<ItemResponse>> getItemsByCharacter(@PathVariable Long characterId) {
         return ResponseEntity.ok(giftService.getItemsByCharacter(characterId));
     }
+
+    //특정 사용자에게 아이템 선물
+    @PostMapping("/send")
+    public ResponseEntity<GiftResponse> sendGift(@RequestBody GiftRequest giftRequest) {
+        GiftResponse response = giftService.sendGift(giftRequest); // GiftRequest 전달
+        return ResponseEntity.ok(response);
+    }
+
+
 }

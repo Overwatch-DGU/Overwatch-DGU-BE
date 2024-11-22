@@ -14,6 +14,7 @@ public class Character {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "character_id")
     private Long characterId;
 
     @Column(nullable = false, unique = true)

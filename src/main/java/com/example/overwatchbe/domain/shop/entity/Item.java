@@ -14,6 +14,7 @@ public class Item {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "item_id")
     private Long itemId;
 
     @Column(nullable = false)
@@ -33,7 +34,7 @@ public class Item {
     private String image;
 
     @ManyToOne
-    @JoinColumn(name = "character_id", nullable = false) // 외래 키 설정
+    @JoinColumn(name = "character_id", nullable = false, referencedColumnName = "character_id") // 외래 키 설정
     private Character character;
 
     @Column(columnDefinition = "TEXT") // description 컬럼 추가

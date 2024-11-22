@@ -1,5 +1,6 @@
 package com.example.overwatchbe.domain.user.service;
 
+import com.example.overwatchbe.domain.user.dto.LogoutRequest;
 import com.example.overwatchbe.domain.user.dto.UserLoginRequest;
 import com.example.overwatchbe.domain.user.dto.UserResponse;
 import com.example.overwatchbe.domain.user.entity.User;
@@ -29,10 +30,17 @@ public class UserService {
         );
     }
 
-    public void logout(Long userId) {
+//    public void logout(Long userId) {
+//        if (!userRepository.existsById(userId)) {
+//            throw new RuntimeException("User not found");
+//        }
+//        // 로그아웃 로직 추가 필요시 구현
+//    }
+    public void logout(LogoutRequest logoutRequest) {
+        Long userId = logoutRequest.getUserId();
         if (!userRepository.existsById(userId)) {
             throw new RuntimeException("User not found");
-        }
-        // 로그아웃 로직 추가 필요시 구현
     }
+    // 추가 처리
+}
 }

@@ -17,10 +17,10 @@ public class Inventory {
     private Long inventoryId;
 
     @ManyToOne
-    @JoinColumn(name = "userId", nullable = false)
+    @JoinColumn(name = "user_id", nullable = false, referencedColumnName = "user_id")
     private com.example.overwatchbe.domain.user.entity.User user;
 
     @ManyToOne
-    @JoinColumn(name = "item_id", nullable = false)
+    @JoinColumn(name = "item_id", nullable = false, referencedColumnName = "item_id")
     private Item item;
 }
