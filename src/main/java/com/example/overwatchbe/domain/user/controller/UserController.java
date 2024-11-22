@@ -1,5 +1,6 @@
 package com.example.overwatchbe.domain.user.controller;
 
+import com.example.overwatchbe.domain.user.dto.LogoutRequest;
 import com.example.overwatchbe.domain.user.dto.UserLoginRequest;
 import com.example.overwatchbe.domain.user.dto.UserResponse;
 import com.example.overwatchbe.domain.user.service.UserService;
@@ -24,8 +25,9 @@ public class UserController {
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(@RequestBody Long userId) {
-        userService.logout(userId);
+    public ResponseEntity<String> logout(@RequestBody LogoutRequest logoutRequest) {
+        userService.logout(logoutRequest);
         return ResponseEntity.ok("Successfully logged out");
     }
+
 }

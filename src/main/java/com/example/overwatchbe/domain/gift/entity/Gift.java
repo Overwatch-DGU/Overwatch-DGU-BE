@@ -20,17 +20,17 @@ public class Gift {
     private Long giftId;
 
     @ManyToOne
-    @JoinColumn(name = "sender_id", nullable = false)
+    @JoinColumn(name = "sender_id", referencedColumnName = "user_id", nullable = false)
     private User sender;
 
     @ManyToOne
-    @JoinColumn(name = "receiver_id", nullable = false)
+    @JoinColumn(name = "receiver_id", referencedColumnName = "user_id", nullable = false)
     private User receiver;
 
     @ManyToOne
-    @JoinColumn(name = "item_id", nullable = false)
+    @JoinColumn(name = "item_id", referencedColumnName = "item_id", nullable = false)
     private Item item;
 
     @Column(nullable = false, updatable = false)
-    private LocalDateTime giftedAt;
+    private LocalDateTime giftedAt = LocalDateTime.now();
 }
