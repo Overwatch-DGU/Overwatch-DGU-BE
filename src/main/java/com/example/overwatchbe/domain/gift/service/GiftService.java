@@ -1,9 +1,10 @@
 package com.example.overwatchbe.domain.gift.service;
 
-import com.example.overwatchbe.domain.gift.dto.GiftRequest;
 import com.example.overwatchbe.domain.gift.dto.GiftResponse;
 import com.example.overwatchbe.domain.gift.entity.Gift;
 import com.example.overwatchbe.domain.gift.repository.GiftRepository;
+import com.example.overwatchbe.domain.log.entity.GiftStatistics;
+import com.example.overwatchbe.domain.log.repository.GiftStatisticsRepository;
 import com.example.overwatchbe.domain.shop.dto.CharacterResponse;
 import com.example.overwatchbe.domain.shop.dto.ItemResponse;
 import com.example.overwatchbe.domain.shop.entity.Item;
@@ -11,7 +12,6 @@ import com.example.overwatchbe.domain.shop.repository.ItemRepository;
 import com.example.overwatchbe.domain.shop.repository.CharacterRepository;
 import com.example.overwatchbe.domain.user.entity.User;
 import com.example.overwatchbe.domain.user.repository.UserRepository;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +28,7 @@ public class GiftService {
 
     private final GiftRepository giftRepository;
     private final UserRepository userRepository;
+    private final GiftStatisticsRepository giftStatisticsRepository;
 
 //    public GiftService(GiftRepository giftRepository, UserRepository userRepository, ItemRepository itemRepository, CharacterRepository characterRepository) {
 //        this.giftRepository = giftRepository;
@@ -135,7 +136,35 @@ public class GiftService {
                 .build();
         giftRepository.save(gift);
 
+        // Update sender's gift statistics
+        updateGiftStatistics(sender.getUserId(), true);
+
+        // Update receiver's gift statistics
+        updateGiftStatistics(receiver.getUserId(), false);
+
         // Return response with success message
         return new GiftResponse("Gift sent successfully", item.getItemId(), sender.getCoin());
     }
+
+    private void updateGiftStatistics(Long userId, boolean isSender) {
+        LocalDateTime now = LocalDateTime.now();
+
+        GiftStatistics stats = giftStatisticsRepository.findByUser_UserId(userId)
+                .orElseGet(() -> GiftStatistics.builder()
+                        .user(userRepository.findById(userId)
+                                .orElseThrow(() -> new IllegalArgumentException("User not found: " + userId)))
+                        .totalGiftsSent(0)
+                        .totalGiftsReceived(0)
+                        .lastGiftDate(null)
+                        .build());
+
+        if (isSender) {
+            stats.incrementGiftsSent(now);
+        } else {
+            stats.incrementGiftsReceived(now);
+        }
+
+        giftStatisticsRepository.save(stats);
+    }
+
 }
