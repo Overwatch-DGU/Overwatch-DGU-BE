@@ -1,5 +1,6 @@
 package com.example.overwatchbe.domain.gift.controller;
 
+import com.example.overwatchbe.domain.gift.dto.GiftItemResponse;
 import com.example.overwatchbe.domain.gift.dto.GiftRequest;
 import com.example.overwatchbe.domain.gift.dto.GiftResponse;
 import com.example.overwatchbe.domain.gift.service.GiftService;
@@ -40,7 +41,7 @@ public class GiftController {
 
     // 특정 캐릭터의 아이템 목록 조회
     @GetMapping("/characters/{characterId}")
-    public ResponseEntity<List<ItemResponse>> getItemsByCharacter(@PathVariable Long characterId) {
+    public ResponseEntity<List<GiftItemResponse>> getItemsByCharacter(@PathVariable Long characterId) {
         return ResponseEntity.ok(giftService.getItemsByCharacter(characterId));
     }
 

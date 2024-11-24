@@ -43,17 +43,20 @@ public class ShopService {
         characterRepository.findById(characterId)
                 .orElseThrow(() -> new RuntimeException("Character not found"));
 
-
         return itemRepository.findAllByCharacter_CharacterId(characterId).stream()
-                .map(item -> new ItemResponse(
-                        item.getItemId(),
-                        item.getName(),
-                        item.getType(),
-                        item.getRarity().getDisplayName(),
-                        item.getPrice(),
-                        item.getImage(),
-                        item.getDescription()
-                ))
+                .map(item -> {
+                    boolean owned = inventoryRepository.existsByUser_UserIdAndItem_ItemId(userId, item.getItemId());
+                    return new ItemResponse(
+                            item.getItemId(),
+                            item.getName(),
+                            item.getType(),
+                            item.getRarity().getDisplayName(),
+                            item.getPrice(),
+                            item.getImage(),
+                            item.getDescription(),
+                            owned // Pass the owned value
+                    );
+                })
                 .collect(Collectors.toList());
     }
 

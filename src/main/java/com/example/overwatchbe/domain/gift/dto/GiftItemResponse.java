@@ -1,11 +1,11 @@
-package com.example.overwatchbe.domain.shop.dto;
+package com.example.overwatchbe.domain.gift.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class ItemResponse {
+public class GiftItemResponse {
     private Long itemId;
     private String name;
     private String type;
@@ -13,5 +13,4 @@ public class ItemResponse {
     private int price;
     private String image;
     private String description;
-    private boolean owned;
 }

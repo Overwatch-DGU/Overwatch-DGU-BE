@@ -1,5 +1,6 @@
 package com.example.overwatchbe.domain.gift.service;
 
+import com.example.overwatchbe.domain.gift.dto.GiftItemResponse;
 import com.example.overwatchbe.domain.gift.dto.GiftResponse;
 import com.example.overwatchbe.domain.gift.entity.Gift;
 import com.example.overwatchbe.domain.gift.repository.GiftRepository;
@@ -54,14 +55,14 @@ public class GiftService {
     }
 
     // 특정 캐릭터의 아이템 목록 조회
-    public List<ItemResponse> getItemsByCharacter(Long characterId) {
+    public List<GiftItemResponse> getItemsByCharacter(Long characterId) {
         // 캐릭터가 존재하는지 확인
         characterRepository.findById(characterId)
                 .orElseThrow(() -> new RuntimeException("Character not found"));
 
         // 해당 캐릭터의 아이템 목록 반환
         return itemRepository.findAllByCharacter_CharacterId(characterId).stream()
-                .map(item -> new ItemResponse(
+                .map(item -> new GiftItemResponse(
                         item.getItemId(),
                         item.getName(),
                         item.getType(),
