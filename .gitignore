@@ -1,2 +1,5 @@
 # Ignore application.properties
 application.properties
+
+# Ignore application-s3.yml
+application-s3.yml

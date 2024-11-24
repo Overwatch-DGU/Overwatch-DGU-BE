@@ -1,0 +1,11 @@
+cloud:
+  aws:
+    s3:
+      bucket: mys3.overwatch.bucket
+    credentials:
+      access-key: AKIA54WIFYN4AQS6UWUH
+      secret-key: 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
+    region:
+      static: ap-northeast-2
+    stack:
+      auto: false
