@@ -24,6 +24,7 @@ public class GiftLogResponse {
     private Long receiverId;
     private String receiverName;
     private Long itemId;
+    private String itemName;
     private LocalDateTime giftedAt;
 
 //    // 추가 생성자 (GiftStatistics와 Gift 데이터를 함께 받기 위한 용도)

@@ -39,6 +39,7 @@ public class GiftLogService {
                         gift.getReceiver().getUserId(),
                         gift.getReceiver().getUsername(),
                         gift.getItem().getItemId(),
+                        gift.getItem().getName(),
                         gift.getGiftedAt()
                 ))
                 .collect(Collectors.toList());
