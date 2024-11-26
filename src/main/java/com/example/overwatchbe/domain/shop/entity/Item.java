@@ -30,7 +30,10 @@ public class Item {
     @Column(nullable = false)
     private int price;
 
-    @Column
+//    @Column
+//    private String image; //처음에 string으로 했으나, 길이 제한걸려서 변경.
+    @Lob
+    @Column(columnDefinition = "LONGTEXT")
     private String image;
 
     @ManyToOne
