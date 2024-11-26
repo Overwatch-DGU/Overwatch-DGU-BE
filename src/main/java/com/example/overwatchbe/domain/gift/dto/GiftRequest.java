@@ -8,6 +8,6 @@ import org.antlr.v4.runtime.misc.NotNull;
 @Setter
 public class GiftRequest {
     private Long senderId;
-    private Long receiverId;
+    private String receiverEmail;
     private Long itemId;
 }

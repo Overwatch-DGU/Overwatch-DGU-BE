@@ -56,7 +56,7 @@ public class GiftController {
         // Fetch sender, receiver, and item from DB
         User sender = userRepository.findById(request.getSenderId())
                 .orElseThrow(() -> new IllegalArgumentException("Sender not found"));
-        User receiver = userRepository.findById(request.getReceiverId())
+        User receiver = userRepository.findByEmail(request.getReceiverEmail())
                 .orElseThrow(() -> new IllegalArgumentException("Receiver not found"));
         Item item = itemRepository.findById(request.getItemId())
                 .orElseThrow(() -> new IllegalArgumentException("Item not found"));
