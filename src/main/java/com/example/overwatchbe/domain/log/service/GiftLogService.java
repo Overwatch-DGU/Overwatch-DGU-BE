@@ -35,7 +35,9 @@ public class GiftLogService {
                         statistics.getLastGiftDate(),
                         gift.getGiftId(),
                         gift.getSender().getUserId(),
+                        gift.getSender().getUsername(),
                         gift.getReceiver().getUserId(),
+                        gift.getReceiver().getUsername(),
                         gift.getItem().getItemId(),
                         gift.getGiftedAt()
                 ))

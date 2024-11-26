@@ -20,7 +20,9 @@ public class GiftLogResponse {
     // Gift 데이터
     private Long giftId;
     private Long senderId;
+    private String senderName;
     private Long receiverId;
+    private String receiverName;
     private Long itemId;
     private LocalDateTime giftedAt;
 
